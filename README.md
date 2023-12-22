@@ -158,4 +158,44 @@ as follows:
 kubectl get pod
 NAME                               READY   STATUS    RESTARTS   AGE
 catalog-service-5b9c996675-nzbhd   1/1     Running   0          21s
-``
+```
+
+By default, applications running in Kubernetes are not 
+accessible. Let’s fix that. 
+First, you can expose Catalog Service to the cluster 
+through a Service resource by running 
+the following command:
+```bash
+kubectl expose deployment catalog-service --name=catalog-service --port=8080
+```
+Exposing a service allows it to be accessible 
+within the cluster or, optionally, from outside 
+the cluster.
+
+The Service object exposes the application to other 
+components inside the cluster. 
+You can verify that it’s been created correctly 
+with the following command:
+```bash
+kubectl get service catalog-service
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE catalog-service ClusterIP 10.96.141.159 <none> 8080/TCP 7s
+```
+
+You can then forward the traffic from a local port on 
+your computer (for example, 8000) to the port exposed 
+by the Service inside the cluster (8080).
+The output of the command will tell you if the 
+port forwarding is configured correctly:
+```bash
+kubectl port-forward service/catalog-service 8000:8080
+Forwarding from 127.0.0.1:8000 -> 8080
+Forwarding from [::1]:8000 -> 8080
+```
+
+Clean-up / delete service and deployment from cluster:
+```bash
+kubectl delete service catalog-service   
+service "catalog-service" deleted
+kubectl delete deployment catalog-service
+deployment.apps "catalog-service" deleted
+```
