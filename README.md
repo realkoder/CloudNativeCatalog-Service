@@ -55,6 +55,11 @@ flag --plateform is because it's not supporting ARM64 yet
 docker run --rm --name catalog-service -p 8080:8080 15cad --platform linux/amd64
 ```
 
+To enter a running Docker container, you can use the docker exec command:
+
+```bash
+docker exec -it <container_name_or_id> /bin/bash
+```
 <br>
 
 ---
@@ -65,35 +70,92 @@ docker run --rm --name catalog-service -p 8080:8080 15cad --platform linux/amd64
 brew install minikube
 ```
 
-Running a local Kubernetes cluster with minikube requires a container runtime or a virtual machine manager. 
-Since we are already using Docker, that’s what we’re going to use. Under the hood, any minikube cluster will 
+Running a local Kubernetes cluster with minikube 
+requires a container runtime or a virtual machine manager. 
+Since we are already using Docker, that’s what 
+we’re going to use. Under the hood, any minikube 
+cluster will 
 run as a Docker container.
-After installing minikube, you can start a new local Kubernetes cluster using the Docker driver. 
-The first time you run this command, it will take a few minutes to download all the components needed to run the cluster:
+After installing minikube, you can start a new local 
+Kubernetes cluster using the Docker driver. 
+The first time you run this command, it will take a 
+few minutes to download all the components needed to 
+run the cluster:
 ```bash
 minikube start --driver=docker
 ```
 
-I recommend making Docker the default driver for minikube by running the follow- ing command:
+I recommend making Docker the default driver for 
+minikube by running the follow- ing command:
 ```bash
 minikube config set driver docker
 ```
 
-To interact with the newly created Kubernetes cluster, you need to install kubectl, the Kubernetes CLI. 
-Installation instructions are available on the official website (https:// kubernetes.io/docs/tasks/tools). 
-On macOS and Linux, you can install it with Home- brew as follows:
+To interact with the newly created Kubernetes cluster, 
+you need to install kubectl, the Kubernetes CLI. 
+Installation instructions are available on the 
+official website [Kubernetes Documentation](https://kubernetes.io/docs/tasks/tools). 
+On macOS and Linux, you can install it with Home- brew 
+as follows:
 ```bash
 brew install kubectl
 ```
 
-Then you can verify that the minikube cluster is started correctly and check that a node is running in your local cluster:
+Then you can verify that the minikube cluster is 
+started correctly and check that a node is running 
+in your local cluster:
 ```bash 
 kubectl get nodes
 NAME       STATUS   ROLES                  AGE     VERSION
 minikube   Ready    control-plane,master   2m20s   v1.24.3
 ```
 
-I recommend stopping minikube whenever you don’t need it to free up resources in your local environment:
+I recommend stopping minikube whenever you don’t need 
+it to free up resources in your local environment:
 ```bash
 minikube stop
 ```
+
+###### Docker-Based Approach:
+Using Docker as the driver means Minikube creates 
+a lightweight Kubernetes cluster directly inside 
+a Docker container on your host machine. 
+The cluster runs within the Docker environment 
+without the need for a separate virtual machine. 
+That is why hyperkit or something similar isn't needed.
+
+Running catalog-service image as a container inside
+minikube cluster, whihc mean it first have to be imported
+into local cluster:
+
+```bash
+minikube image load catalog-service:0.0.1-SNAPSHOT
+```
+
+To achieve the cloud native goals, you want the platform
+to take care of instantiating Pods so that if 
+one goes down, it can be replaced by another one. 
+What you need is a Deployment resource that will 
+make Kubernetes create application instances 
+as Pod resources.
+From a Terminal window, run the following command:
+```bash
+kubectl create deployment catalog-service --image=catalog-service:0.0.1-SNAPSHOT
+```
+
+You can verify the creation of the Deployment object 
+as follows:
+```bash
+kubectl get deployment
+NAME              READY   UP-TO-DATE   AVAILABLE   AGE
+catalog-service   1/1     1            1           7s
+```
+Behind the scenes, Kubernetes created a Pod 
+for the application defined in the Deployment resource. 
+You can verify the creation of the Pod object 
+as follows:
+```bash
+kubectl get pod
+NAME                               READY   STATUS    RESTARTS   AGE
+catalog-service-5b9c996675-nzbhd   1/1     Running   0          21s
+``
