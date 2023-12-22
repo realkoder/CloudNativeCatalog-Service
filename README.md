@@ -4,7 +4,7 @@
 ## Utility Commands
 pwd should be appplication root directory.
 
-Boot the spring application
+Boot the spring application with gradle.
 ```shell
 ./gradlew bootRun
 ```
@@ -53,4 +53,47 @@ After the image is created execute this:
 flag --plateform is because it's not supporting ARM64 yet
 ```shell
 docker run --rm --name catalog-service -p 8080:8080 15cad --platform linux/amd64
+```
+
+<br>
+
+---
+
+### Using minikube for Kubernetes
+
+```bash
+brew install minikube
+```
+
+Running a local Kubernetes cluster with minikube requires a container runtime or a virtual machine manager. 
+Since we are already using Docker, that’s what we’re going to use. Under the hood, any minikube cluster will 
+run as a Docker container.
+After installing minikube, you can start a new local Kubernetes cluster using the Docker driver. 
+The first time you run this command, it will take a few minutes to download all the components needed to run the cluster:
+```bash
+minikube start --driver=docker
+```
+
+I recommend making Docker the default driver for minikube by running the follow- ing command:
+```bash
+minikube config set driver docker
+```
+
+To interact with the newly created Kubernetes cluster, you need to install kubectl, the Kubernetes CLI. 
+Installation instructions are available on the official website (https:// kubernetes.io/docs/tasks/tools). 
+On macOS and Linux, you can install it with Home- brew as follows:
+```bash
+brew install kubectl
+```
+
+Then you can verify that the minikube cluster is started correctly and check that a node is running in your local cluster:
+```bash 
+kubectl get nodes
+NAME       STATUS   ROLES                  AGE     VERSION
+minikube   Ready    control-plane,master   2m20s   v1.24.3
+```
+
+I recommend stopping minikube whenever you don’t need it to free up resources in your local environment:
+```bash
+minikube stop
 ```
