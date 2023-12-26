@@ -9,6 +9,14 @@ Boot the spring application with gradle.
 ./gradlew bootRun
 ```
 
+Bootjar compiles and package the application as a jar file.
+```shell
+./gradlew bootjar
+```
+Then execute the jar file through java:
+```shell
+java -jar build/libs/catalog-service-0.0.1-SNAPSHOT.jar
+```
 <br>
 
 ---
@@ -21,11 +29,12 @@ spring application can start up without any errors.
 ./gradlew test
 ```
 <br>
+<br>
 
 ---
 ### Use Of Docker
 
-This command will clean-up, as soon as container exits
+This command will clean up, as soon as container exits
 it gets deleted.
 ``` shell
 docker run --rm my-image
@@ -91,6 +100,8 @@ minikube by running the follow- ing command:
 minikube config set driver docker
 ```
 
+<br>
+
 To interact with the newly created Kubernetes cluster, 
 you need to install kubectl, the Kubernetes CLI. 
 Installation instructions are available on the 
@@ -115,6 +126,7 @@ it to free up resources in your local environment:
 ```bash
 minikube stop
 ```
+<br>
 
 ###### Docker-Based Approach:
 Using Docker as the driver means Minikube creates 
@@ -199,3 +211,10 @@ service "catalog-service" deleted
 kubectl delete deployment catalog-service
 deployment.apps "catalog-service" deleted
 ```
+
+<br>
+
+---
+
+## Documentation for REST API EXAMPLE
+![REST API DOCUMENTATION](img/RestAPIDocumentation.png)
