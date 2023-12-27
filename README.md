@@ -83,10 +83,10 @@ Running a local Kubernetes cluster with minikube
 requires a container runtime or a virtual machine manager. 
 Since we are already using Docker, that’s what 
 we’re going to use. Under the hood, any minikube 
-cluster will 
-run as a Docker container.
+cluster will run as a Docker container.
 After installing minikube, you can start a new local 
-Kubernetes cluster using the Docker driver. 
+Kubernetes cluster using the Docker driver.
+
 The first time you run this command, it will take a 
 few minutes to download all the components needed to 
 run the cluster:
@@ -95,7 +95,7 @@ minikube start --driver=docker
 ```
 
 I recommend making Docker the default driver for 
-minikube by running the follow- ing command:
+minikube by running the following command:
 ```bash
 minikube config set driver docker
 ```
@@ -150,6 +150,7 @@ one goes down, it can be replaced by another one.
 What you need is a Deployment resource that will 
 make Kubernetes create application instances 
 as Pod resources.
+
 From a Terminal window, run the following command:
 ```bash
 kubectl create deployment catalog-service --image=catalog-service:0.0.1-SNAPSHOT
@@ -173,7 +174,7 @@ catalog-service-5b9c996675-nzbhd   1/1     Running   0          21s
 ```
 
 By default, applications running in Kubernetes are not 
-accessible. Let’s fix that. 
+accessible. Let’s fix that.
 First, you can expose Catalog Service to the cluster 
 through a Service resource by running 
 the following command:
@@ -185,7 +186,8 @@ within the cluster or, optionally, from outside
 the cluster.
 
 The Service object exposes the application to other 
-components inside the cluster. 
+components inside the cluster.
+
 You can verify that it’s been created correctly 
 with the following command:
 ```bash
@@ -210,6 +212,19 @@ kubectl delete service catalog-service
 service "catalog-service" deleted
 kubectl delete deployment catalog-service
 deployment.apps "catalog-service" deleted
+```
+
+<br>
+
+---
+
+## Testing
+Red phase failing test -> green phase parsing test 
+-> refactor phase.
+
+To run a test class with gradle:
+```bash
+./gradlew test --tests BookValidationTests
 ```
 
 <br>
