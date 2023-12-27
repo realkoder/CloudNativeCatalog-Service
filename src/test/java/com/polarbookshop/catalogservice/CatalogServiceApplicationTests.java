@@ -29,5 +29,4 @@ class CatalogServiceApplicationTests {
                     assertThat(actualBook.isbn()).isEqualTo(expectedBook.isbn());
                 });
     }
-
 }
