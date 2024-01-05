@@ -257,3 +257,16 @@ logback-core     1.4.11     1.4.12    java-archive  GHSA-vmq6-5m68-f53m  High
 Github Actions workflows are runned on 
 either windows, mac or linux servers 
 -> they are called runners.
+
+<br>
+
+Dealing with environment variables they can be set
+through CLI like the given command:
+```bash
+ POLAR_GREETING="Welcome FROM ENVIRONMENT" java -jar build/libs/catalog-service-0.0.1-SNAPSHOT.jar
+ ```
+
+To start application with defined profile:
+```bash
+java -jar build/lib/catalog-service-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+```
