@@ -270,3 +270,12 @@ To start application with defined profile:
 ```bash
 java -jar build/lib/catalog-service-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
 ```
+
+## Configurations
+Relying on a config-repo pushed to Github and connected through config-service,
+then making changes to the config-repo and pushing the changes. 
+It is relevant to use Actuator to trigger a refresh
+for all @ConfigurationProperties which happens through post request for: http://localhost:9001/actuator/refresh.
+```bash
+curl -X POST http://localhost:9001/actuator/refresh
+```
