@@ -71,6 +71,14 @@ To enter a running Docker container, you can use the docker exec command:
 ```bash
 docker exec -it <container_name_or_id> /bin/bash
 ```
+
+Booting up an postgreSQL container from dockerhub image:
+```bash
+docker run -d --name polar-postgres / 
+-e POSTGRES_USER=user -e POSTGRES_PASSWORD=password /
+-e POSTGRES_DB=polardb_catalog -p 5432:5432 postgres:14.1
+```
+
 <br>
 
 ---
