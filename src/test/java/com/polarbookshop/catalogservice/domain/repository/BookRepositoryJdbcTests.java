@@ -14,18 +14,18 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJdbcTest //This trigger spring boot to include all Spring Data JDBC entities and repos
+@DataJdbcTest // This trigger spring boot to include all Spring Data JDBC entities and repos
 @Import(DataConfig.class) //This is to enable auditing
 
-//Disables default behavior so testcontainers can be used
+// Disables default behavior so testcontainers can be used
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ActiveProfiles("integration") //Enable the application file from test resources application-integration.yml
+@ActiveProfiles("integration") // Enable the application file from test resources application-integration.yml
 class BookRepositoryJdbcTests {
     @Autowired
     private BookRepository bookRepository;
 
     @Autowired
-    private JdbcAggregateTemplate jdbcAggregateTemplate; //Lower level object to interact with db
+    private JdbcAggregateTemplate jdbcAggregateTemplate; // Lower level object to interact with db
 
     @Test
     void findBookByIsbnWhenExisting() {
