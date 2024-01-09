@@ -82,6 +82,50 @@ docker run -d --name polar-postgres -e POSTGRES_USER=user -e POSTGRES_PASSWORD=p
 ![dockerfileCommonInstructions](img/dockerfileCommonInstructions.png)
 
 
+#### Docker with GitHub for ContainerRegistry
+Generate a PAT (personal access token) at GitHub.
+`CloudNative p. 187`
+Run following command and enter github username and then
+the generated PAT: `(ghcr: GitHub container registry)`
+```bash
+docker login ghcr.io
+```
+Container images follow common naming conventions, 
+which are adopted by OCI- compliant container registries: 
+<container_registry>/<namespace>/<name>[:<tag>]:
+When uploading your images to GitHub Container Registry, 
+you are required to use fully qualified names, 
+according to the 
+ghcr.io/<your_github_username>/ <image_name> format. 
+For example, my GitHub username is ThomasVitale, 
+and all my personal images are named 
+ghcr.io/thomasvitale/<image_name> 
+(notice how the username is converted to lowercase).
+
+Had to change tag for created image: my-java-image
+to make it follow ghcr naming convention:
+```bash
+docker tag my-java-image:1.0.0 ghcr.io/realkoder/my-java-image:1.0.0
+```
+And then the image can be pushed for the ghcr:
+```bash
+docker push ghcr.io/realkoder/my-java-image:1.0.0
+```
+
+<br>
+
+#### Containers Interacting With Each-other
+Docker has a built-in DNS server that can enable 
+containers in the same network to find each other using 
+the container name rather than a hostname or an IP address. 
+For example, Catalog Service will be able to call the 
+PostgreSQL server through the URL 
+jdbc:postgresql://polar-postgres:5432, 
+where polar-postgres is the container name.
+
+###### Docker Network
+![dockerNetwork](img/dockerNetwork.png)
+
 <br>
 
 ---
@@ -119,7 +163,7 @@ To interact with the newly created Kubernetes cluster,
 you need to install kubectl, the Kubernetes CLI. 
 Installation instructions are available on the 
 official website [Kubernetes Documentation](https://kubernetes.io/docs/tasks/tools). 
-On macOS and Linux, you can install it with Home- brew 
+On macOS and Linux, you can install it with brew 
 as follows:
 ```bash
 brew install kubectl
