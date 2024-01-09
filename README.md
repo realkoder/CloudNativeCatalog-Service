@@ -266,8 +266,6 @@ Github Actions workflows are runned on
 either windows, mac or linux servers 
 -> they are called runners.
 
-<br>
-
 Dealing with environment variables they can be set
 through CLI like the given command:
 ```bash
@@ -278,6 +276,24 @@ To start application with defined profile:
 ```bash
 java -jar build/lib/catalog-service-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
 ```
+
+The annotation for records/intities `@Version` is used 
+for optimistic locking so that the db can deal with 
+concurrency related issues.
+
+Database `auditing` is keeping track of when and who
+edited the persisted data.
+With spring the annotation `@EnableJdbcAuditing` which
+can be used for a configuration class.
+If using spring JPA instead of JdbcData use the annotation
+`@EnableJpaAuditing` and also the entity class have to be
+annotated with `@EntityListeners(AuditingEntityListener.class)`.
+
+![auditingAnnotations.png](img/auditingAnnotations.png)
+
+<br>
+
+---
 
 ## Configurations
 Relying on a config-repo pushed to Github and connected through config-service,
