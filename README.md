@@ -74,9 +74,7 @@ docker exec -it <container_name_or_id> /bin/bash
 
 Booting up an postgreSQL container from dockerhub image:
 ```bash
-docker run -d --name polar-postgres / 
--e POSTGRES_USER=user -e POSTGRES_PASSWORD=password /
--e POSTGRES_DB=polardb_catalog -p 5432:5432 postgres:14.1
+docker run -d --name polar-postgres -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password -e POSTGRES_DB=polardb_catalog -p 5432:5432 postgres:14.1
 ```
 
 <br>
@@ -291,6 +289,11 @@ annotated with `@EntityListeners(AuditingEntityListener.class)`.
 
 ![auditingAnnotations.png](img/auditingAnnotations.png)
 
+
+With Spring, it's possible to test only different aspects
+of the whole container - `slice-tests`. Examples are
+MVC and JSON slices could also be data slices.
+
 <br>
 
 ---
@@ -303,3 +306,35 @@ for all @ConfigurationProperties which happens through post request for: http://
 ```bash
 curl -X POST http://localhost:9001/actuator/refresh
 ```
+
+#### Setting up testcontainer for integration test with postgresql.
+Change the build.gradle file so following gets implemented:
+```yaml
+ext { ...
+  set('testcontainersVersion', "1.17.3")
+}
+dependencies {
+  ...
+testImplementation 'org.testcontainers:postgresql'
+}
+dependencyManagement {
+  imports {
+...
+    mavenBom "org.testcontainers:
+➥ testcontainers-bom:${testcontainersVersion}" }
+}
+```
+
+Then create a resources folder in test and add a new
+application.yml file with following:
+```yaml
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:14.4:///
+```
+That´s it now you can test the integration of 
+production based DB which in this case is postgresql.
+
+Using the annotation `@DataJdbcTest` makes each test
+run in transaction and rolls it back at its end so the
+db is kept clean.
