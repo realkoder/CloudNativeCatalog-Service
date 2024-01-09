@@ -282,7 +282,9 @@ concurrency related issues.
 Database `auditing` is keeping track of when and who
 edited the persisted data.
 With spring the annotation `@EnableJdbcAuditing` which
-can be used for a configuration class.
+can be used for a configuration class so that the
+annotated entities with e.g. `@CreatedBy` will be
+set by Spring Data Jdbc.
 If using spring JPA instead of JdbcData use the annotation
 `@EnableJpaAuditing` and also the entity class have to be
 annotated with `@EntityListeners(AuditingEntityListener.class)`.
