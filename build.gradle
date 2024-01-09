@@ -51,7 +51,10 @@ dependencies {
     // PostgreSQL Driver
     runtimeOnly 'org.postgresql:postgresql'
 
-    //testContainers
+    // Flyway
+    implementation 'org.flywaydb:flyway-core'
+
+    // testContainers
     implementation 'org.testcontainers:postgresql'
 }
 
