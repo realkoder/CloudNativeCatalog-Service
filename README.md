@@ -135,7 +135,7 @@ docker run -d --name polar-postgres --net catalog-network -e POSTGRES_USER=user 
 ```
 
 Then the project is build with gradle and root Dockerfile
-is executed and image run with below cli:
+is executed and the image is run with below cli:
 ```bash
 ./gradlew clean bootjar
 docker build -t catalog-service .
@@ -288,6 +288,58 @@ deployment.apps "catalog-service" deleted
 ```
 
 <br>
+
+# Building production ready container images
+
+Using spring boot JAR packaging its more efficient to rebuild images based on changes if let's say a new REST endpoint is added.
+The original JAR file is not supposed to be stored inside the image, instead Docker provideds `multi-stage builds`.
+
+```dockerfile
+FROM eclipse-temurin:17 AS BUILDER
+WORKDIR workspace
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} catalog-service.jar
+RUN java -Djarmode=layertools -jar catalog-service.jar extract
+
+FROM eclipse-temurin:17 
+WORKDIR workspace
+COPY --from=builder workspace/dependencies/ ./
+COPY --from=builder workspace/spring-boot-loader/ ./ COPY --from=builder workspace/snapshot-dependencies/ ./ COPY --from=builder workspace/application/ ./ 
+ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+```
+
+It's crucial to scan builded images for vulnerabilities and recommended to embrace it and configure it automatically within
+the deployment pipeline.
+Grype can be used for vulnerability scanning a created Docker image:
+```bash
+docker build -t catalog-service .
+grype catalog-service
+```
+
+## Building with Cloud Native Build-packs
+
+Based on this config n `build.gradle`:
+```groovy
+bootBuildImage {
+    imageName = "${project.name}"
+    environment = ["BP_JVM_VERSION" : "17.*"]
+}
+```
+
+Then it's possible to execute this command and create an image ready to build spring boot application container:
+```bash
+./gradlew bootBuildImage
+```
+
+Running the container on an Apple Silicon computer, 
+the previous command might return a message like “WARNING: The requested image’s platform (linux/amd64) 
+does not match the detected host platform (linux/arm64/v8) and no specific platform was requested.” 
+In that case, you’ll need to include this additional argument to the previous command (before the image name) 
+until support for ARM64 is added to Paketo Build- packs: --platform linux/amd64
+
+<br>
+
+---
 
 ---
 

@@ -72,3 +72,8 @@ tasks.named('test') {
 bootRun {
     systemProperty 'spring.profiles.active', 'testData'
 }
+
+bootBuildImage {
+    imageName = "${project.name}"
+    environment = ["BP_JVM_VERSION" : "17.*"]
+}
