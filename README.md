@@ -289,6 +289,9 @@ deployment.apps "catalog-service" deleted
 
 <br>
 
+---
+
+
 # Building production ready container images
 
 Using spring boot JAR packaging its more efficient to rebuild images based on changes if let's say a new REST endpoint is added.
@@ -337,9 +340,12 @@ does not match the detected host platform (linux/arm64/v8) and no specific platf
 In that case, you’ll need to include this additional argument to the previous command (before the image name) 
 until support for ARM64 is added to Paketo Build- packs: --platform linux/amd64
 
-<br>
+Build an image with gradle and make it publish the image to github containerregistry:
+```bash
+ ./gradlew bootBuildImage --imageName ghcr.io/realkoder/catalog-service --publishImage -PregistryUrl="ghcr.io" -PregisterUsername=<github_username> -PregistryToken=<github_access_token>
+```
 
----
+<br>
 
 ---
 
