@@ -345,6 +345,9 @@ Build an image with gradle and make it publish the image to github containerregi
  ./gradlew bootBuildImage --imageName ghcr.io/realkoder/catalog-service --publishImage -PregistryUrl="ghcr.io" -PregisterUsername=<github_username> -PregistryToken=<github_access_token>
 ```
 
+### Notes and CLI commands for docker-compose
+Then go to `polar-deployment` repo's `README.md` file.
+
 <br>
 
 ---
