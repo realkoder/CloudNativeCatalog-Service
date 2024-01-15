@@ -199,7 +199,42 @@ it to free up resources in your local environment:
 ```bash
 minikube stop
 ```
+
 <br>
+
+##### Setting up a configured minikube cluster
+
+Create a new kubernetes cluster named polar on top of docker and declaring resources:
+```bash
+minikube start --cpus 2 --memory 4g --driver docker --profile polar
+```
+
+Get a list of all nodes from the cluster:
+```bash
+kubectl get nodes
+```
+
+List all the available contexts with which you can interact with:
+```bash
+kubectl config get-contexts
+```
+Verifying the current context:
+```bash
+kubectl config current-context
+```
+Change the current context:
+```bash
+kubectl config use-context polar
+```
+Starting, stopping and deleting a cluster:
+```bash
+minikube start --profile polar
+minikube stop --profile polar
+minikube delete --profile polar
+```
+
+<br>
+
 
 ###### Docker-Based Approach:
 Using Docker as the driver means Minikube creates 
