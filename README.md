@@ -233,6 +233,28 @@ minikube stop --profile polar
 minikube delete --profile polar
 ```
 
+Deploy a PostgreSQL in local cluster, then it's needed to
+get to the directory where the `kubernetes/platform/development/`
+is located - for this project it will be the `polar-deployment`:
+```bash
+kubectl apply -f services
+```
+To undeploy the database place yourself in same folder as above
+and execute:
+```bash
+kubectl delete -f services
+```
+
+Check out running pods inside kubernetes cluster:
+```bash
+kubectl get pod
+```
+
+Get the database logs:
+```bash
+kubectl logs deployment/polar-postgres
+```
+
 <br>
 
 
@@ -501,3 +523,15 @@ production based DB which in this case is postgresql.
 Using the annotation `@DataJdbcTest` makes each test
 run in transaction and rolls it back at its end so the
 db is kept clean.
+
+<br>
+
+---
+
+#### Kubernetes nice to know
+
+Linkerd (a service mesh) adds its own container 
+(a sidecar) to Pods to perform operations such as 
+intercepting HTTP traffic and encrypting it to 
+guarantee secure communication between all Pods via 
+mTLS (mutual Transport Layer Security).
