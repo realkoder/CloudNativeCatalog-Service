@@ -3,7 +3,7 @@ on: push
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: realkoder
+  IMAGE_NAME: realkoder/catalog-service
   VERSION: latest
 
 jobs:
