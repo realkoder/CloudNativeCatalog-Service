@@ -261,7 +261,11 @@ the objects supported by the cluster.
 The kubernetes manifest:
 ![Kubernetes manifest](img/KubernetesManifest.png)
 
-
+To load the needed image into kubernetes cluster for building
+docker container from catalog-service application run following:
+```bash
+minikube image load catalog-service --profile polar
+```
 
 <br>
 
