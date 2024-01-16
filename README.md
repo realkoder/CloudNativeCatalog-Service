@@ -366,6 +366,9 @@ To undeploy the application:
 tilt down
 ```
 
+See this https://docs.tilt.dev/multiple_repos.html if dealing
+with many tilt files and many repos.
+
 ###### Octant
 Octant is a tool used for manage, monitor and investigate 
 failures with all the related Kubernetes objects.
