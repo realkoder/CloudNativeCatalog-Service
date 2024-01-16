@@ -327,6 +327,18 @@ then also configure the `deployment.yml` within `k8s/`:
                 command: ["sh", "-c", "sleep 5"] # Makes kubernetes wait 5 seconds before sending the SIGTERM signal to the pod
 ```
 
+Delete a pod:
+```bash
+kubectl delete pod <pod_name>
+```
+Delete all based on `k8s/` so for this repo it means both
+the deployment which creates the pod and the service which
+exposes the pod:
+```bash
+kubectl delete -f k8s 
+```
+
+
 ---
 
 
