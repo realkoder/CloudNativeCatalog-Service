@@ -267,6 +267,69 @@ docker container from catalog-service application run following:
 minikube image load catalog-service --profile polar
 ```
 
+To verify that the image is loaded into kubernetes cluster
+it's possible to open a shell into it through ssh:
+```bash
+minikube ssh --profile polar
+docker images
+```
+
+Create a deployment object from the manifest; navigate to
+the Catalog Service Root folder and run:
+```bash
+kubectl apply -f k8s/deployment.yml
+```
+
+Verify which objects have been created with following command:
+```bash
+kubectl get all -l app=catalog-service
+```
+
+Verify that the catalog-service started up correctly:
+```bash
+kubectl logs deployment/catalog-service
+```
+
+Get more information about errors and kubectl logs from a
+given pod with this command:
+```bash
+kubectl descrive pod <pod_name>
+kubectl logs <pod_name>
+```
+
+After the service.yml file is configured then apply it, so it
+gets processed by Kubernetes Control Plane:
+```bash
+kubectl apply -f k8s/service.yml
+```
+
+Verify that the Service object got created and added to the cluster:
+```bash
+kubectl get svc -l app=catalog-service
+```
+
+Expose the object to a local machine:
+```bash
+kubectl port-forward service/catalog-service 9001:80
+```
+
+When setting the gracefull shutdown in application props
+then also configure the `deployment.yml` within `k8s/`:
+```yaml
+    spec:
+      containers:
+        - name: catalog-service
+          image: catalog-service
+          imagePullPolicy: IfNotPresent # Only pulling image form ghcr if not locally present
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 5"] # Makes kubernetes wait 5 seconds before sending the SIGTERM signal to the pod
+```
+
+---
+
+
 <br>
 
 
@@ -554,3 +617,5 @@ you can just tell Kubernetes what you want,
 and the orchestrator will figure out how to achieve 
 the desired result and keep it consistent.
 That’s what we call declarative configuration.
+
+[Glossary for kubernetes](https://kubernetes.io/docs/reference/glossary)
