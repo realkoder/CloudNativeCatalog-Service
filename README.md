@@ -341,6 +341,42 @@ kubectl delete -f k8s
 
 ---
 
+## Using Tilt and Octant to configure the kubernetes cluster
+###### Tilt
+Installed by homebrew:
+```bash
+brew install tilt-dev/tap/tilt
+```
+
+Add a `Tiltfile` for configuring how the spring boot application 
+should be built and configured as a pod for the kubernetes
+cluster.
+Then run:
+```bash
+tilt up
+```
+
+To undeploy the application:
+```bash
+tilt down
+```
+
+###### Octant
+Octant is a tool used for manage, monitor and investigate 
+failures with all the related Kubernetes objects.
+
+Installed by homebrew:
+```bash
+brew install octant
+```
+
+As soon as the cluster is up and running execute this:
+```bash
+octant
+```
+
+---
+
 
 <br>
 

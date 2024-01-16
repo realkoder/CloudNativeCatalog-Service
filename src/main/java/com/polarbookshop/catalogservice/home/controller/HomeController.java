@@ -15,6 +15,6 @@ public class HomeController {
 
     @GetMapping
     public String getGreeting() {
-        return "<h1 style=\"color: purple;\">" + polarProperties.getGreeting() + "</h1>";
+        return "<h1 style=\"color: purple;\">" + polarProperties.getGreeting() + "HEJSAIN" + "</h1>";
     }
 }
