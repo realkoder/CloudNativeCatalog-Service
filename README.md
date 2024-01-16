@@ -255,6 +255,14 @@ Get the database logs:
 kubectl logs deployment/polar-postgres
 ```
 
+You can use the `kubectl api-resources command to list all 
+the objects supported by the cluster.
+
+The kubernetes manifest:
+![Kubernetes manifest](img/KubernetesManifest.png)
+
+
+
 <br>
 
 
@@ -535,3 +543,10 @@ Linkerd (a service mesh) adds its own container
 intercepting HTTP traffic and encrypting it to 
 guarantee secure communication between all Pods via 
 mTLS (mutual Transport Layer Security).
+
+You don’t need to worry about how to achieve a specific result. 
+Unlike imperative tools such as Ansible or Puppet, 
+you can just tell Kubernetes what you want, 
+and the orchestrator will figure out how to achieve 
+the desired result and keep it consistent.
+That’s what we call declarative configuration.
