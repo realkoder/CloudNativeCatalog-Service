@@ -341,8 +341,13 @@ kubectl delete -f k8s
 
 ---
 
-## Using Tilt and Octant to configure the kubernetes cluster
+## Using Tilt, Octant and Kubeval to configure the kubernetes cluster
 ###### Tilt
+Tilt is used for maneging the deployment of application 
+for kubernetes cluster instead of relying on cli kubectl.
+It's defined in Tiltfile placed in project root folder
+and the syntax is `Starlark`.
+
 Installed by homebrew:
 ```bash
 brew install tilt-dev/tap/tilt
@@ -373,6 +378,24 @@ brew install octant
 As soon as the cluster is up and running execute this:
 ```bash
 octant
+```
+
+###### Kubeval
+Used for validating the Kubernetes manifest against the
+Kubernetes API.
+
+Installed with homebrew:
+```bash
+brew tap instrumenta/instrumenta
+brew install kubeval
+```
+Apparently it's disabled but the GitHub repo recommends
+`kubeconform`.
+
+Executing the following kubeval command will validate
+the Kubernetes manifest within the `k8s/` directory:
+```bash
+kubeval --strict -d k8s
 ```
 
 ---
