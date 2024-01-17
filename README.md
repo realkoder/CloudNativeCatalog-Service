@@ -148,6 +148,8 @@ docker run -d --name catalog-service --net catalog-network -p 9001:9001 -e SPRIN
 
 ### Using minikube for Kubernetes
 
+![MinikubeExplained](img/MinikubeExplained.png)
+
 ```bash
 brew install minikube
 ```
@@ -343,7 +345,7 @@ kubectl delete -f k8s
 
 ## Using Tilt, Octant and Kubeval to configure the kubernetes cluster
 ###### Tilt
-Tilt is used for maneging the deployment of application 
+Tilt is used for managing the deployment of application 
 for kubernetes cluster instead of relying on cli kubectl.
 It's defined in Tiltfile placed in project root folder
 and the syntax is `Starlark`.
