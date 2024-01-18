@@ -707,3 +707,5 @@ servers in chapter 4.
 It’s based on a reactive stack, therefor it can 
 scale efficiently to handle the high workload naturally 
 happening at the edge of a system.
+
+![Spring Clouds main building block](img/SpringCloudGatewayMainBuildBlocks.png)
