@@ -295,7 +295,7 @@ kubectl logs deployment/catalog-service
 Get more information about errors and kubectl logs from a
 given pod with this command:
 ```bash
-kubectl descrive pod <pod_name>
+kubectl describe pod <pod_name>
 kubectl logs <pod_name>
 ```
 
