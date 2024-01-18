@@ -260,7 +260,7 @@ kubectl logs deployment/polar-postgres
 You can use the `kubectl api-resources command to list all 
 the objects supported by the cluster.
 
-The kubernetes manifest:
+###### The kubernetes manifest:
 ![Kubernetes manifest](img/KubernetesManifest.png)
 
 To load the needed image into kubernetes cluster for building
@@ -363,9 +363,12 @@ Then run:
 tilt up
 ```
 
-To undeploy the application:
+To undeploy the application (it's important that you're
+standing in the directory or giving the path to `Tiltfile` 
+with flag -f so that tilt knows which pods it has to terminate)
+Lets say i want to terminate based by `polar-deployment` repo:
 ```bash
-tilt down
+tilt -f kubernetes/applications/development/Tiltfile down
 ```
 
 See this https://docs.tilt.dev/multiple_repos.html if dealing
@@ -695,3 +698,12 @@ the desired result and keep it consistent.
 That’s what we call declarative configuration.
 
 [Glossary for kubernetes](https://kubernetes.io/docs/reference/glossary)
+
+#### Edge Servers and Spring Cloud Gateway
+As a basic mitigation strategy, 
+you should deploy at least two replicas of an edge server 
+following the same approach we discussed for configuration 
+servers in chapter 4.
+It’s based on a reactive stack, therefor it can 
+scale efficiently to handle the high workload naturally 
+happening at the edge of a system.
